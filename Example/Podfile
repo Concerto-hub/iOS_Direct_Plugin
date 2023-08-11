@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'iOS_Direct_Plugin_Example' do
+  pod 'iOS_Direct_Plugin', :path => '../'
+
+  target 'iOS_Direct_Plugin_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
