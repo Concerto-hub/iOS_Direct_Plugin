@@ -9,7 +9,8 @@
 Pod::Spec.new do |s|
   s.name             = 'iOS_Direct_Plugin'
   s.version          = '3.0.0'
-  s.summary          = 'A short description of iOS_Direct_Plugin.'
+  s.summary          = 'iOS_Hosted_plugin performs complete transactions.'
+  s.swift_version    = '4.0'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +19,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+  'Payment Gateway is a robust and cutting-edge technology platform that enables secure online payments.'
                        DESC
 
   s.homepage         = 'https://github.com/Concerto-hub/iOS_Direct_Plugin'
@@ -30,7 +31,9 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '11.0'
 
-  s.source_files = 'iOS_Direct_Plugin/Classes/**/*'
+  s.source_files = 'Sources/**/*.{swift,h,m}'
+    
+  s.resources = 'Sources/**/*.storyboard'
   
   # s.resource_bundles = {
   #   'iOS_Direct_Plugin' => ['iOS_Direct_Plugin/Assets/*.png']
