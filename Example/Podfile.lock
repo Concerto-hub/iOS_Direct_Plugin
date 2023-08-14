@@ -1,0 +1,16 @@
+PODS:
+  - iOS_Direct_Plugin (0.1.0)
+
+DEPENDENCIES:
+  - iOS_Direct_Plugin (from `../`)
+
+EXTERNAL SOURCES:
+  iOS_Direct_Plugin:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  iOS_Direct_Plugin: 3a073cb11ff133a1d6e2447c87aff08a0a52da48
+
+PODFILE CHECKSUM: 082c7eaaa0ac445f36f2c2e06f7cfcc78978c69d
+
+COCOAPODS: 1.11.3
