@@ -11,7 +11,7 @@ import UIKit
 public struct ZDLUtility {
     public static func getBundle() -> Bundle? {
         var bundle: Bundle?
-        if let urlString = Bundle.main.path(forResource:"Urway", ofType: "framework", inDirectory: "Frameworks")
+        if let urlString = Bundle.main.path(forResource:"Payments", ofType: "framework", inDirectory: "Frameworks")
         {
             bundle = (Bundle(url: URL(fileURLWithPath: urlString)))
         }

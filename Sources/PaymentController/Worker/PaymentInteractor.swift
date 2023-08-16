@@ -1,9 +1,7 @@
 
 //
 //  PaymentInteractor.swift
-//  Urway
-//
-//  Copyright (c) 2020 URWAY. All rights reserved.
+
 
 import UIKit
 import CommonCrypto
@@ -82,9 +80,44 @@ class PaymentInteractor: IPaymentInteractor {
             "cache-control": "no-cache",
           ]
   
+        //value for device
+        //
+        var deviceInfo:[String: Any] = [:]
+        var deviceInfoJsonString:String = ""
+        let ModelName = UIDevice.current.name
+        let version = UIDevice.current.systemVersion
+        let platfrom = UIDevice.current.model
+        
+        print(ModelName)          // iPhone XR
+        print(version)       // 12.1
+        print(platfrom)     // iPhone
+        
+        let myPodVersion = MyPodVersion.version
+        print("My Pod Version: \(myPodVersion)")
+        
+        
+        deviceInfo = [
+            "pluginName": "Native iOS",
+            "pluginVersion": myPodVersion,
+            "clientPlatform": platfrom,
+            "deviceModel": ModelName,
+            "devicePlatform": platfrom,
+            "deviceOSVersion": version
+        ]
+        
+        print(deviceInfo)
+        do {
+        let jsonData = try JSONSerialization.data(withJSONObject: deviceInfo, options: [])
+           let jsonString = String(data: jsonData, encoding: .utf8)!
+           print("Device INFO JSON ", jsonString )
+            deviceInfoJsonString = jsonString
+
+        } catch  {
+            print("error")
+        }
             let strIPAddress = Validator().getWiFiAddress()
 //        print("IPAddress :: \(strIPAddress)")
-//        print("Transaction ID" , transid )
+       print("Transaction ID" , transid )
 //
         let parameters = [
             "transid": transid,
@@ -111,13 +144,14 @@ class PaymentInteractor: IPaymentInteractor {
             "tokenOperation": tokenOperation,
             "cardToken": cardTocken,
             "tokenizationType": tokenizationType,
-            "instrumentType" : "DEFAULT",
+            "instrumentType" : "CCI",
             "cardHolderName": holderName,
             "metaData": metaData,
             "cvv2" : cvv,
             "cardNumber": cardNumber,
             "expMonth": expMonth,
-            "expYear": expYear
+            "expYear": expYear,
+            "deviceInfo": deviceInfoJsonString
             
                 
             
@@ -160,11 +194,12 @@ class PaymentInteractor: IPaymentInteractor {
                     
                     if let result = receivedTodo["result"] as? String , result == "UnSuccessful" , let code =  receivedTodo["responsecode"] as? String , code != "000"{
                         
-                        
+                        print("in UnSuccessful of payment interactor " )
                       //  self.presenter?.apiResult(result: .failure("\(code)"), response: receivedTodo, error: error);
 //                        self.postTransEnq(for: model)
                        // return
                     }else if let result = receivedTodo["result"] as? String , result == "Successful" , let code =  receivedTodo["responsecode"] as? String , code == "000"{
+                        print("in Sucess of payment interactor " )
                         //self.presenter?.apiResult(result: .sucess, response: receivedTodo, error: error);
                         self.paymentID = receivedTodo["TranId"] as! String
 //                        self.postTransEnq(for: model)
@@ -177,45 +212,23 @@ class PaymentInteractor: IPaymentInteractor {
                         let string = self.newURL
                         if string.contains("?") {
                            
-                            self.newURL = "\(self.newURL)paymentid=\(payID)"
+                            self.newURL = "\(self.newURL)\(payID)"
                         }
                         else{
-                        self.newURL = "\(self.newURL)?paymentid=\(payID)"
+                            self.newURL = "\(self.newURL)\(payID)"
                         }
                     }
                     
                     if self.newURL.isEmpty , let code =  receivedTodo["responseCode"] as? String{
+                        print("in FAILUREEEE ")
+                        
                         self.presenter?.apiResult(result: .failure("\(code)"), response: receivedTodo, error: error);
                         return
                     }
                     
-                       /*
-                    if tockenName == "D" , let payID = receivedTodo["payid"] as? String{
-                        
-                        fullURL = "https://payments-dev.urway-tech.com/URWAYPGService/3DRedirect.jsp?paymentid=\(payID)"
-                    } else {
-                        fullURL = self.newURL
-                    }*/
+ 
                     
-//                    if tockenName == "D"{
-//                        let string = self.newURL
-//                        if string.contains("?") {
-//                            print("NEW RUNALI : \(string)")
-//
-//                        }
-//                        if let payID = receivedTodo["payid"] as? String{
-//                            print("the NEW URL : \(self.newURL)")
-//                            self.newURL = "\(self.newURL)?paymentid=\(payID)"
-//                            fullURL = "\(self.newURL)\(payID)"
-//                            print("the NEW URL1 : \(fullURL)")
-//                        }else{
-//                            fullURL = self.newURL
-//                            print("the NEW URL2 : \(fullURL)")
-//                        }
-//                        //fullURL = "https://payments-dev.urway-tech.com/URWAYPGService/3DRedirect.jsp?paymentid=\(payID)"
-//                    } else {
-                       fullURL = self.newURL
-//                    }
+                    fullURL = self.newURL
                     print("the NEW URL : \(self.newURL)")
                     print("the url is : \(fullURL)")
 
@@ -413,7 +426,7 @@ extension PaymentInteractor {
             return sha256String
         }
         return ""
-    } 
+    }
     
 }
 

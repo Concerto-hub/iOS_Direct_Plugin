@@ -1,9 +1,7 @@
 //
 //  UMConfiguration.swift
 //  Pods-UrwayDemoApp
-//
-//  Created by aravind-zt336 on 01/06/20.
-//
+
 
 import Foundation
 public class UWConfiguration: NSObject {

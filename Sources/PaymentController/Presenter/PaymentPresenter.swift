@@ -1,13 +1,11 @@
 //
 //  PaymentPresenter.swift
-//  Urway
-//
-//  Copyright (c) 2020 URWAY. All rights reserved.
+
 
 import UIKit
 
 protocol IPaymentPresenter: class {
-	// do someting...
+    // do someting...
     
     func apiResult(result: paymentResult, response: [String: Any]?  , error: Error? )
 }
